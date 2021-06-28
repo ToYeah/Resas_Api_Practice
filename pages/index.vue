@@ -30,8 +30,8 @@ export default class index extends Vue {
     return { prefectures }
   }
 
-  private changePrefDisplay(prefData: { prefName: string; prefCode: number }) {
-    console.log(prefData)
+  private changePrefDisplay(pref: Prefecture) {
+    console.log(pref)
   }
 }
 </script>

@@ -5,9 +5,7 @@
         v-model="item.isDisplay"
         type="checkbox"
         name="displayPrefecture"
-        :data-name="item.name"
-        :data-id="item.id"
-        @change="onChangeDisplay"
+        @change="onChangeDisplay(item)"
       />
       {{ item.name }}
     </label>
@@ -24,10 +22,8 @@ export default class CheckBox extends Vue {
   private prefectures!: Prefecture
 
   @Emit()
-  onChangeDisplay(event: any) {
-    const prefName = event.currentTarget.getAttribute('data-name')
-    const prefId = event.currentTarget.getAttribute('data-id')
-    return { prefName, prefId }
+  onChangeDisplay(pref: Prefecture) {
+    return pref
   }
 }
 </script>

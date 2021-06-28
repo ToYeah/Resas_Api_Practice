@@ -1,7 +1,11 @@
 <template>
   <div>
     <label v-for="item in prefectures" :key="item.name">
-      <input type="checkbox" name="displayPrefecture" :value="item.isDisplay" />
+      <input
+        v-model="item.isDisplay"
+        type="checkbox"
+        name="displayPrefecture"
+      />
       {{ item.name }}
     </label>
   </div>

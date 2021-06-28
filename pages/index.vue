@@ -1,5 +1,7 @@
 <template>
-  <p>{{ prefectures }}</p>
+  <div>
+    <check-box :prefectures="prefectures"></check-box>
+  </div>
 </template>
 
 <script lang="ts">
@@ -7,8 +9,9 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import { Context } from '@nuxt/types'
 import { fetchApiData } from '@/plugins/fetchApiData'
 import Prefecture, { createPrefectureArray } from '@/plugins/prefecture'
+import CheckBox from '@/components/CheckBox.vue'
 
-@Component
+@Component({ components: { CheckBox } })
 export default class index extends Vue {
   async asyncData(context: Context) {
     const { $config } = context

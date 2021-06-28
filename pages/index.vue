@@ -1,6 +1,9 @@
 <template>
   <div>
-    <check-box :prefectures="prefectures"></check-box>
+    <check-box
+      :prefectures="prefectures"
+      @on-change-display="changePrefDisplay"
+    ></check-box>
   </div>
 </template>
 
@@ -25,6 +28,10 @@ export default class index extends Vue {
       prefectures = createPrefectureArray(apiResponse.data.result)
     }
     return { prefectures }
+  }
+
+  private changePrefDisplay(prefData: { prefName: string; prefCode: number }) {
+    console.log(prefData)
   }
 }
 </script>

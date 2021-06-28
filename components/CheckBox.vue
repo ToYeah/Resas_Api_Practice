@@ -6,7 +6,8 @@
         type="checkbox"
         name="displayPrefecture"
         :data-name="item.name"
-        @change="onChange"
+        :data-id="item.id"
+        @change="onChangeDisplay"
       />
       {{ item.name }}
     </label>
@@ -14,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator'
 import Prefecture from '@/plugins/prefecture'
 
 @Component
@@ -22,8 +23,11 @@ export default class CheckBox extends Vue {
   @Prop()
   private prefectures!: Prefecture
 
-  private onChange(event: any) {
-    console.log(event.currentTarget.getAttribute('data-name'))
+  @Emit()
+  onChangeDisplay(event: any) {
+    const prefName = event.currentTarget.getAttribute('data-name')
+    const prefId = event.currentTarget.getAttribute('data-id')
+    return { prefName, prefId }
   }
 }
 </script>

@@ -16,7 +16,7 @@ export default class index extends Vue {
   async asyncData(context: Context) {
     const { $config } = context
     let prefectures: Prefecture[] = []
-    const apiToken = $config.apiToken
+    const apiToken: string = $config.apiToken
     const apiResponse = await fetchApiData('api/v1/prefectures', apiToken, {})
     if (apiResponse) {
       prefectures = createPrefectureArray(apiResponse.data.result)

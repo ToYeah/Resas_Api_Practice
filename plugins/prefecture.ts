@@ -9,3 +9,16 @@ export default class Prefecture {
     this.isDisplay = false
   }
 }
+
+export const createPrefectureArray = (
+  responses: {
+    prefCode: number
+    prefName: string
+  }[]
+): Prefecture[] => {
+  const result: Prefecture[] = []
+  for (const elem of responses) {
+    result.push(new Prefecture(elem))
+  }
+  return result
+}

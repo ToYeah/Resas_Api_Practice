@@ -48,6 +48,9 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
+  publicRuntimeConfig: {
+    apiToken: process.env.API_TOKEN || '',
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }

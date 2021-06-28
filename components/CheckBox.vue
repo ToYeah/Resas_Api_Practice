@@ -5,6 +5,8 @@
         v-model="item.isDisplay"
         type="checkbox"
         name="displayPrefecture"
+        :data-name="item.name"
+        @change="onChange"
       />
       {{ item.name }}
     </label>
@@ -19,5 +21,9 @@ import Prefecture from '@/plugins/prefecture'
 export default class CheckBox extends Vue {
   @Prop()
   private prefectures!: Prefecture
+
+  private onChange(event: any) {
+    console.log(event.currentTarget.getAttribute('data-name'))
+  }
 }
 </script>

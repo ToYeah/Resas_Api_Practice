@@ -16,12 +16,15 @@ export default class index extends Vue {
   async asyncData(context: Context) {
     const { $config } = context
     let prefectures: Prefecture[] = []
-    const apiToken: string = $config.apiToken
-    const apiResponse = await fetchApiData('api/v1/prefectures', apiToken, {})
+    const apiResponse = await fetchApiData(
+      'api/v1/prefectures',
+      $config.apiToken,
+      {}
+    )
     if (apiResponse) {
       prefectures = createPrefectureArray(apiResponse.data.result)
     }
-    return { prefectures, apiToken }
+    return { prefectures }
   }
 }
 </script>

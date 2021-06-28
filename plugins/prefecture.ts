@@ -1,11 +1,11 @@
 export default class Prefecture {
   public readonly name: string
-  public readonly id: string
+  public readonly id: number
   public readonly isDisplay: boolean
 
-  constructor(name: string, id: string) {
-    this.name = name
-    this.id = id
+  constructor(obj: { prefCode: number; prefName: string }) {
+    this.name = obj.prefName
+    this.id = obj.prefCode
     this.isDisplay = false
   }
 }

@@ -40,6 +40,14 @@ export default class PrefChart extends Vue {
     }
   }
 
+  private createColor(prefCode: number) {
+    const num = 9
+    const offset = (prefCode / num) * Math.ceil(47 / num)
+    const start = (360 / num) * (prefCode % num)
+    const color = Math.round(start + offset)
+    return `hsl(${color},80%,60%)`
+  }
+
   private removePrefData(prefName: string) {
     const index = this.displayPrefData.findIndex(
       (elem) => elem.prefName === prefName
@@ -52,8 +60,10 @@ export default class PrefChart extends Vue {
 
     for (const elem of this.displayPrefData) {
       datasets.push({
-        label: elem.prefectureName,
+        label: elem.prefName,
         data: elem.values,
+        backgroundColor: '#00000000',
+        borderColor: this.createColor(elem.prefCode),
       })
     }
 

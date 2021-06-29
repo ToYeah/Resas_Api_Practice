@@ -1,15 +1,23 @@
 <template>
-  <div>{{ displayPrefData }}</div>
+  <div>
+    <chart-render :chart-data="chartData"></chart-render>
+  </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import Prefecture from '@/plugins/prefecture'
+import ChartRender from '@/components/ChartRender.vue'
+import { ChartData, ChartDataSets } from 'chart.js'
 import PopulationTransition, {
   createPopulationTransition,
 } from '~/plugins/populationTransition'
+const labels = [
+  1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020,
+  2025, 2030, 2035, 2040, 2045,
+]
 
-@Component
+@Component({ components: { ChartRender } })
 export default class PrefChart extends Vue {
   private displayPrefData: PopulationTransition[] = []
 
@@ -37,6 +45,19 @@ export default class PrefChart extends Vue {
       (elem) => elem.prefectureName === prefName
     )
     this.displayPrefData.splice(index, 1)
+  }
+
+  get chartData(): ChartData {
+    const datasets: ChartDataSets[] = []
+
+    for (const elem of this.displayPrefData) {
+      datasets.push({
+        label: elem.prefectureName,
+        data: elem.values,
+      })
+    }
+
+    return { labels, datasets }
   }
 }
 </script>

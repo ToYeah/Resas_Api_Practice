@@ -1,12 +1,14 @@
 import { fetchApiData } from '@/plugins/fetchApiData'
 
 export default class PopulationTransition {
-  public readonly prefectureName: string
+  public readonly prefName: string
+  public readonly prefCode: number
   public readonly years: number[]
   public readonly values: number[]
 
-  constructor(prefectureName: string, years: number[], values: number[]) {
-    this.prefectureName = prefectureName
+  constructor(name: string, id: number, years: number[], values: number[]) {
+    this.prefName = name
+    this.prefCode = id
     this.years = years
     this.values = values
   }
@@ -39,7 +41,7 @@ export const createPopulationTransition = async (
       years.push(elem.year)
       values.push(elem.value)
     }
-    result = new PopulationTransition(prefName, years, values)
+    result = new PopulationTransition(prefName, prefCode, years, values)
   }
   return result
 }

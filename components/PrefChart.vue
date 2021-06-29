@@ -42,7 +42,7 @@ export default class PrefChart extends Vue {
 
   private removePrefData(prefName: string) {
     const index = this.displayPrefData.findIndex(
-      (elem) => elem.prefectureName === prefName
+      (elem) => elem.prefName === prefName
     )
     this.displayPrefData.splice(index, 1)
   }

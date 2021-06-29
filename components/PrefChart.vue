@@ -30,13 +30,21 @@ export default class PrefChart extends Vue {
   }
 
   private async pushPrefData(pref: Prefecture) {
+    this.displayPrefData.push(
+      new PopulationTransition(pref.name, pref.code, [], [])
+    )
     const prefData = await createPopulationTransition(
       this.$config.apiToken,
       pref.name,
       pref.code
     )
     if (prefData) {
-      this.displayPrefData.push(prefData)
+      const index = this.displayPrefData.findIndex(
+        (elem) => elem.prefName === pref.name
+      )
+      if (index !== -1) {
+        this.displayPrefData.splice(index, 1, prefData)
+      }
     }
   }
 

@@ -45,6 +45,11 @@ export default {
     '@nuxtjs/axios',
     'nuxt-webfontloader'
   ],
+  webfontloader: {
+    google: {
+      families: ['Fjalla+One'],
+    },
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},

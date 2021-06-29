@@ -1,5 +1,6 @@
 <template>
   <div>
+    <nav-bar></nav-bar>
     <check-box
       :prefectures="prefectures"
       @on-change-display="notifyChangePrefDisplayEvent"
@@ -15,8 +16,9 @@ import { fetchApiData } from '@/plugins/fetchApiData'
 import Prefecture, { createPrefectureArray } from '@/plugins/prefecture'
 import CheckBox from '@/components/CheckBox.vue'
 import PrefChart from '@/components/PrefChart.vue'
+import NavBar from '@/components/NavBar.vue'
 
-@Component({ components: { CheckBox, PrefChart } })
+@Component({ components: { CheckBox, PrefChart, NavBar } })
 export default class index extends Vue {
   async asyncData(context: Context) {
     const { $config } = context

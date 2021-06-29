@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="$style.checkBox__background">
     <label v-for="item in prefectures" :key="item.name">
       <input
         v-model="item.isDisplay"
@@ -27,3 +27,14 @@ export default class CheckBox extends Vue {
   }
 }
 </script>
+
+<style module>
+.checkBox__background {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+</style>

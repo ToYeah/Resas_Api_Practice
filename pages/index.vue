@@ -1,11 +1,13 @@
 <template>
   <div>
     <nav-bar></nav-bar>
-    <check-box
-      :prefectures="prefectures"
-      @on-change-display="notifyChangePrefDisplayEvent"
-    ></check-box>
-    <pref-chart ref="chart"></pref-chart>
+    <div :class="$style.app__background">
+      <check-box
+        :prefectures="prefectures"
+        @on-change-display="notifyChangePrefDisplayEvent"
+      ></check-box>
+      <pref-chart ref="chart"></pref-chart>
+    </div>
   </div>
 </template>
 
@@ -39,3 +41,11 @@ export default class index extends Vue {
   }
 }
 </script>
+
+<style module>
+.app__background {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

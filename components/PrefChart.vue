@@ -33,7 +33,7 @@ export default class PrefChart extends Vue {
     const prefData = await createPopulationTransition(
       this.$config.apiToken,
       pref.name,
-      pref.id
+      pref.code
     )
     if (prefData) {
       this.displayPrefData.push(prefData)

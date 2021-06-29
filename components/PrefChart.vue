@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="$style.chart__background">
     <chart-render :chart-data="chartData"></chart-render>
   </div>
 </template>
@@ -71,3 +71,13 @@ export default class PrefChart extends Vue {
   }
 }
 </script>
+
+<style module>
+.chart__background {
+  height: 600px;
+  width: 600px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

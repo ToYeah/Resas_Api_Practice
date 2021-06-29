@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.chart__background">
+  <div :class="['chart__background', isMobile ? 'chart__background--mobile' : 'chart__background--pc' ]">
     <chart-render :chart-data="chartData"></chart-render>
   </div>
 </template>
@@ -20,6 +20,7 @@ const labels = [
 @Component({ components: { ChartRender } })
 export default class PrefChart extends Vue {
   private displayPrefData: PopulationTransition[] = []
+  private isMobile: boolean = window.innerWidth < 750
 
   public changePrefDisplay(pref: Prefecture) {
     if (pref.isDisplay) {
@@ -77,15 +78,35 @@ export default class PrefChart extends Vue {
 
     return { labels, datasets }
   }
+
+  private mobileCheck() {
+    this.isMobile = window.innerWidth < 750
+  }
+
+  mounted() {
+    window.addEventListener('resize', this.mobileCheck)
+  }
+
+  beforeDestroy() {
+    window.removeEventListener('resize', this.mobileCheck)
+  }
 }
 </script>
 
-<style module>
+<style scoped>
 .chart__background {
-  height: 600px;
-  width: 600px;
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.chart__background--pc {
+  height: 600px;
+  width: 600px;
+}
+
+.chart__background--mobile {
+  height: auto;
+  width: 80%;
 }
 </style>

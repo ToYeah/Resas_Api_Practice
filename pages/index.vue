@@ -48,4 +48,7 @@ export default class index extends Vue {
   margin-left: auto;
   margin-right: auto;
 }
+body {
+  margin: 0px;
+}
 </style>

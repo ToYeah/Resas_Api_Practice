@@ -10,7 +10,7 @@ import PopulationTransition, {
 } from '~/plugins/populationTransition'
 
 @Component
-export default class CheckBox extends Vue {
+export default class PrefChart extends Vue {
   private displayPrefData: PopulationTransition[] = []
 
   public changePrefDisplay(pref: Prefecture) {

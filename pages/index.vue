@@ -4,7 +4,7 @@
       :prefectures="prefectures"
       @on-change-display="notifyChangePrefDisplayEvent"
     ></check-box>
-    <chart ref="chart"></chart>
+    <pref-chart ref="chart"></pref-chart>
   </div>
 </template>
 
@@ -14,9 +14,9 @@ import { Context } from '@nuxt/types'
 import { fetchApiData } from '@/plugins/fetchApiData'
 import Prefecture, { createPrefectureArray } from '@/plugins/prefecture'
 import CheckBox from '@/components/CheckBox.vue'
-import Chart from '@/components/Chart.vue'
+import PrefChart from '@/components/PrefChart.vue'
 
-@Component({ components: { CheckBox, Chart } })
+@Component({ components: { CheckBox, PrefChart } })
 export default class index extends Vue {
   async asyncData(context: Context) {
     const { $config } = context
@@ -33,7 +33,7 @@ export default class index extends Vue {
   }
 
   private notifyChangePrefDisplayEvent(pref: Prefecture) {
-    ;(this.$refs.chart as Chart).changePrefDisplay(pref)
+    ;(this.$refs.chart as PrefChart).changePrefDisplay(pref)
   }
 }
 </script>

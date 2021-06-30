@@ -1,5 +1,10 @@
 <template>
-  <div :class="['chart__background', isMobile ? 'chart__background--mobile' : 'chart__background--pc' ]">
+  <div
+    :class="[
+      'chart__background',
+      isMobile ? 'chart__background--mobile' : 'chart__background--pc',
+    ]"
+  >
     <chart-render :chart-data="chartData"></chart-render>
   </div>
 </template>

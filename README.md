@@ -1,8 +1,9 @@
 # Resas_API_Practice
 
+An application to visualize the population transition of Japanese prefectures
+
 ![RESASAPIPRACTICE](https://user-images.githubusercontent.com/62199197/123995843-b0c20c00-da09-11eb-86a6-1f48059ce545.png)
 
-An application to visualize the population transition of Japanese prefectures
 
 ## Application
 

@@ -23,7 +23,7 @@ import NavBar from '@/components/NavBar.vue'
 @Component({ components: { CheckBox, PrefChart, NavBar } })
 export default class index extends Vue {
   private isErrorOccurred: boolean = false
-  private prefectures: Prefecture[] | undefined
+  private prefectures: Prefecture[] = []
   async asyncData(context: Context) {
     const { $config } = context
     let prefectures: Prefecture[] = []
@@ -32,7 +32,8 @@ export default class index extends Vue {
       $config.apiToken,
       {}
     )
-    if (apiResponse) {
+
+    if (apiResponse?.data?.result) {
       prefectures = createPrefectureArray(apiResponse.data.result)
     }
     return { prefectures }

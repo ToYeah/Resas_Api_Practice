@@ -5,7 +5,10 @@
       isMobile ? 'chart__background--mobile' : 'chart__background--pc',
     ]"
   >
-    <chart-render :chart-data="chartData"></chart-render>
+    <chart-render
+      :chart-data="chartData"
+      :options="chartOptions"
+    ></chart-render>
   </div>
 </template>
 
@@ -13,7 +16,7 @@
 import { Vue, Component, PropSync } from 'nuxt-property-decorator'
 import Prefecture from '@/plugins/prefecture'
 import ChartRender from '@/components/ChartRender.vue'
-import { ChartData, ChartDataSets } from 'chart.js'
+import { ChartData, ChartDataSets, ChartAnimationOptions } from 'chart.js'
 import PopulationTransition, {
   createPopulationTransition,
 } from '~/plugins/populationTransition'
@@ -87,6 +90,32 @@ export default class PrefChart extends Vue {
     }
 
     return { labels, datasets }
+  }
+
+  private chartOptions: Chart.ChartOptions = {
+    animation: { duration: 0 },
+    scales: {
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: '年度',
+          },
+        },
+      ],
+      yAxes: [
+        {
+          ticks: {
+            suggestedMin: 0,
+            suggestedMax: 10000000,
+          },
+          scaleLabel: {
+            display: true,
+            labelString: '人口数',
+          },
+        },
+      ],
+    },
   }
 
   private mobileCheck() {

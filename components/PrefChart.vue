@@ -16,7 +16,7 @@
 import { Vue, Component, PropSync } from 'nuxt-property-decorator'
 import Prefecture from '@/plugins/prefecture'
 import ChartRender from '@/components/ChartRender.vue'
-import { ChartData, ChartDataSets, ChartAnimationOptions } from 'chart.js'
+import { ChartData, ChartDataSets } from 'chart.js'
 import PopulationTransition, {
   createPopulationTransition,
 } from '~/plugins/populationTransition'

@@ -13,6 +13,11 @@
       />
       {{ item.name }}
     </label>
+    <label
+      v-for="item in prefectures"
+      :key="item.name + '_empty'"
+      :class="$style.checkBox__input"
+    ></label>
   </div>
 </template>
 
@@ -39,6 +44,7 @@ export default class CheckBox extends Vue {
   margin-right: auto;
   margin-bottom: 20px;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 }
 

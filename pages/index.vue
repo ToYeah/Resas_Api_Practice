@@ -22,6 +22,8 @@ import NavBar from '@/components/NavBar.vue'
 
 @Component({ components: { CheckBox, PrefChart, NavBar } })
 export default class index extends Vue {
+  private isErrorOccurred: boolean = false
+  private prefectures: Prefecture[] | undefined
   async asyncData(context: Context) {
     const { $config } = context
     let prefectures: Prefecture[] = []
@@ -38,6 +40,12 @@ export default class index extends Vue {
 
   private notifyChangePrefDisplayEvent(pref: Prefecture) {
     ;(this.$refs.chart as PrefChart).changePrefDisplay(pref)
+  }
+
+  mounted() {
+    if (!this.prefectures || this.prefectures.length === 0) {
+      this.isErrorOccurred = true
+    }
   }
 }
 </script>

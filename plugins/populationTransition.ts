@@ -28,7 +28,7 @@ export const createPopulationTransition = async (
       cityCode: '-',
     }
   )
-  if (apiResponse) {
+  if (apiResponse?.data?.result) {
     const years: number[] = []
     const values: number[] = []
     const transitionData: {

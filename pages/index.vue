@@ -1,6 +1,9 @@
 <template>
   <div>
     <nav-bar></nav-bar>
+    <div v-if="isErrorOccurred" :class="$style.error__text">
+      An Error Has Occured. Please Reload
+    </div>
     <div :class="$style.app__background">
       <check-box
         :prefectures="prefectures"
@@ -59,5 +62,12 @@ export default class index extends Vue {
 }
 body {
   margin: 0px;
+}
+
+.error__text {
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 </style>

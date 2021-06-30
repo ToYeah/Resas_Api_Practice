@@ -9,7 +9,10 @@
         :prefectures="prefectures"
         @on-change-display="notifyChangePrefDisplayEvent"
       ></check-box>
-      <pref-chart ref="chart"></pref-chart>
+      <pref-chart
+        ref="chart"
+        :is-error-occurred.sync="isErrorOccurred"
+      ></pref-chart>
     </div>
   </div>
 </template>

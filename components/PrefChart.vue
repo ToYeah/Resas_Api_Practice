@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, PropSync } from 'nuxt-property-decorator'
 import Prefecture from '@/plugins/prefecture'
 import ChartRender from '@/components/ChartRender.vue'
 import { ChartData, ChartDataSets } from 'chart.js'
@@ -24,6 +24,9 @@ const labels = [
 
 @Component({ components: { ChartRender } })
 export default class PrefChart extends Vue {
+  @PropSync('isErrorOccurred', {})
+  syncedIsErrorOccurred!: boolean
+
   private displayPrefData: PopulationTransition[] = []
   private isMobile: boolean = window.innerWidth < 750
 
@@ -51,6 +54,8 @@ export default class PrefChart extends Vue {
       if (index !== -1) {
         this.displayPrefData.splice(index, 1, prefData)
       }
+    } else {
+      this.syncedIsErrorOccurred = true
     }
   }
 

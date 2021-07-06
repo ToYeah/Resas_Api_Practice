@@ -31,25 +31,46 @@ export default class PrefChart extends Vue {
   syncedIsErrorOccurred!: boolean
 
   private displayPrefData: PopulationTransition[] = []
+  private prefDataCache: PopulationTransition[] = []
   private isMobile: boolean = window.innerWidth < 750
 
   public changePrefDisplay(pref: Prefecture) {
     if (pref.isDisplay) {
-      this.pushPrefData(pref)
+      this.pushPrefData(pref, this.prefDataCache)
     } else {
       this.removePrefData(pref.name)
     }
   }
 
-  private async pushPrefData(pref: Prefecture) {
+  private async fetchPrefData(
+    pref: Prefecture,
+    cache: PopulationTransition[]
+  ): Promise<PopulationTransition | null> {
+    const index = cache.findIndex((elem) => elem.prefName === pref.name)
+    let result: PopulationTransition
+    if (index === -1) {
+      const prefData = await createPopulationTransition(
+        this.$config.apiToken,
+        pref.name,
+        pref.code
+      )
+      if (prefData) {
+        cache.push(prefData)
+        result = prefData
+      } else {
+        return null
+      }
+    } else {
+      result = cache[index]
+    }
+    return result
+  }
+
+  private async pushPrefData(pref: Prefecture, cache: PopulationTransition[]) {
     this.displayPrefData.push(
       new PopulationTransition(pref.name, pref.code, [], [])
     )
-    const prefData = await createPopulationTransition(
-      this.$config.apiToken,
-      pref.name,
-      pref.code
-    )
+    const prefData = await this.fetchPrefData(pref, cache)
     if (prefData) {
       const index = this.displayPrefData.findIndex(
         (elem) => elem.prefName === pref.name

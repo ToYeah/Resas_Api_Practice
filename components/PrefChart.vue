@@ -16,14 +16,11 @@
 import { Vue, Component, PropSync } from 'nuxt-property-decorator'
 import Prefecture from '@/plugins/prefecture'
 import ChartRender from '@/components/ChartRender.vue'
-import { ChartData, ChartDataSets } from 'chart.js'
+import { ChartData } from 'chart.js'
+import { chartOptions, createChartData } from '@/plugins/chartDataOperation'
 import PopulationTransition, {
   createPopulationTransition,
 } from '~/plugins/populationTransition'
-const labels = [
-  1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020,
-  2025, 2030, 2035, 2040, 2045,
-]
 
 @Component({ components: { ChartRender } })
 export default class PrefChart extends Vue {
@@ -31,25 +28,47 @@ export default class PrefChart extends Vue {
   syncedIsErrorOccurred!: boolean
 
   private displayPrefData: PopulationTransition[] = []
+  private prefDataCache: PopulationTransition[] = []
   private isMobile: boolean = window.innerWidth < 750
+  private chartOptions = chartOptions
 
   public changePrefDisplay(pref: Prefecture) {
     if (pref.isDisplay) {
-      this.pushPrefData(pref)
+      this.pushPrefData(pref, this.prefDataCache)
     } else {
       this.removePrefData(pref.name)
     }
   }
 
-  private async pushPrefData(pref: Prefecture) {
+  private async fetchPrefData(
+    pref: Prefecture,
+    cache: PopulationTransition[]
+  ): Promise<PopulationTransition | null> {
+    const index = cache.findIndex((elem) => elem.prefName === pref.name)
+    let result: PopulationTransition
+    if (index === -1) {
+      const prefData = await createPopulationTransition(
+        this.$config.apiToken,
+        pref.name,
+        pref.code
+      )
+      if (prefData) {
+        cache.push(prefData)
+        result = prefData
+      } else {
+        return null
+      }
+    } else {
+      result = cache[index]
+    }
+    return result
+  }
+
+  private async pushPrefData(pref: Prefecture, cache: PopulationTransition[]) {
     this.displayPrefData.push(
       new PopulationTransition(pref.name, pref.code, [], [])
     )
-    const prefData = await createPopulationTransition(
-      this.$config.apiToken,
-      pref.name,
-      pref.code
-    )
+    const prefData = await this.fetchPrefData(pref, cache)
     if (prefData) {
       const index = this.displayPrefData.findIndex(
         (elem) => elem.prefName === pref.name
@@ -62,14 +81,6 @@ export default class PrefChart extends Vue {
     }
   }
 
-  private createColor(prefCode: number) {
-    const num = 9
-    const offset = (prefCode / num) * Math.ceil(47 / num)
-    const start = (360 / num) * (prefCode % num)
-    const color = Math.round(start + offset)
-    return `hsl(${color},80%,60%)`
-  }
-
   private removePrefData(prefName: string) {
     const index = this.displayPrefData.findIndex(
       (elem) => elem.prefName === prefName
@@ -78,44 +89,7 @@ export default class PrefChart extends Vue {
   }
 
   get chartData(): ChartData {
-    const datasets: ChartDataSets[] = []
-
-    for (const elem of this.displayPrefData) {
-      datasets.push({
-        label: elem.prefName,
-        data: elem.values,
-        backgroundColor: '#00000000',
-        borderColor: this.createColor(elem.prefCode),
-      })
-    }
-
-    return { labels, datasets }
-  }
-
-  private chartOptions: Chart.ChartOptions = {
-    animation: { duration: 0 },
-    scales: {
-      xAxes: [
-        {
-          scaleLabel: {
-            display: true,
-            labelString: '年度',
-          },
-        },
-      ],
-      yAxes: [
-        {
-          ticks: {
-            suggestedMin: 0,
-            suggestedMax: 10000000,
-          },
-          scaleLabel: {
-            display: true,
-            labelString: '人口数',
-          },
-        },
-      ],
-    },
+    return createChartData(this.displayPrefData)
   }
 
   private mobileCheck() {
